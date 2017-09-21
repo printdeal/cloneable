@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <div class="panel js-cloneable">
+                <div class="panel-heading">
+                    <a class="icon js-cloneable-add">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a class="icon js-cloneable-remove">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <h1>List item 1</h1>
+                </div>
+                <div class="panel-block">
+                    <div>
+                        <p>Bla bla bla</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel js-cloneable">
+                <div class="panel-heading">
+                    <a class="icon js-cloneable-add">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a class="icon js-cloneable-remove">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <h1>List item 2</h1>
+                </div>
+                <div class="panel-block">
+                    <div>
+                        <p>Bla bla bla</p>
+                        <p>Bla bla bla</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel js-cloneable">
+                <div class="panel-heading">
+                    <a href="ajax-item.html" class="icon js-cloneable-add">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a href="remove-item.json" class="icon js-cloneable-remove">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <h1>List item that adds and removes through ajax requests</h1>
+                </div>
+                <div class="panel-block">
+                    <div>
+                        <p>Bla bla bla</p>
+                        <p>Bla bla bla</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../src/cloneable.js"></script>
+        <script>
+            $('.js-cloneable').each(function () {
+                new Cloneable(this);
+            });
+        </script>
+    </body>
+</html>
