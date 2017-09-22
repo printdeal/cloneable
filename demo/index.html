@@ -55,6 +55,26 @@
                     <div>
                         <p>Bla bla bla</p>
                         <p>Bla bla bla</p>
+                        <p>Bla bla bla</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel js-cloneable">
+                <div class="panel-heading">
+                    <a href="ajax-item.html" data-ajax-url="alternative-ajax-item.json" class="icon js-cloneable-add">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a href="ajax-item.html" data-ajax-url="remove-item.json" class="icon js-cloneable-remove">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <h1>List item that adds and removes through alternative ajax requests</h1>
+                </div>
+                <div class="panel-block">
+                    <div>
+                        <p>Bla bla bla</p>
+                        <p>Bla bla bla</p>
+                        <p>Bla bla bla</p>
+                        <p>Bla bla bla</p>
                     </div>
                 </div>
             </div>
@@ -62,6 +82,15 @@
         <script src="../src/cloneable.js"></script>
         <script>
             $('.js-cloneable').each(function () {
+                if($(this).find('.js-cloneable-add[data-ajax-url]')) {
+                    new Cloneable(this, {
+                        onBeforeAddHtml: function (response) {
+                            var response = JSON.parse(response);
+                            return response.data.html;
+                        }
+                    });
+                    return;
+                }
                 new Cloneable(this);
             });
         </script>

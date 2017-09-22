@@ -3,7 +3,11 @@ function Cloneable(item, config = {}) {
     this.config = {
         addSelector: '.js-cloneable-add',
         removeSelector: '.js-cloneable-remove',
-        slideDuration: 200
+        slideDuration: 200,
+        dataAttribute: 'data-ajax-url',
+        onBeforeAddHtml: function (response) {
+            return response;
+        }
     };
     this.config = $.extend(this.config, config);
     this.locked = false;
@@ -18,7 +22,8 @@ Cloneable.prototype = {
     bindAddHandler: function () {
         var self = this;
         this.$item.find(this.config.addSelector).on('click', function (e) {
-            if (this.href) {
+            var url = self.getControlUrl(this);
+            if (url !== null) {
                 e.preventDefault();
 
                 if(!self.locked) {
@@ -26,9 +31,12 @@ Cloneable.prototype = {
 
                     $.ajax({
                         type: 'GET',
-                        url: this.href,
+                        url: url,
                         success: function (response) {
-                            self.add(response);
+                            html = self.config.onBeforeAddHtml(response);
+                            if (html !== null) {
+                                self.add(html);
+                            }
                             self.locked = false;
                         },
                         dataType: 'html'
@@ -44,7 +52,8 @@ Cloneable.prototype = {
     bindRemoveHandler: function () {
         var self = this;
         this.$item.find(this.config.removeSelector).on('click', function (e) {
-            if (this.href) {
+            var url = self.getControlUrl(this);
+            if (url !== null) {
                 e.preventDefault();
 
                 if(!self.locked) {
@@ -52,7 +61,7 @@ Cloneable.prototype = {
 
                     $.ajax({
                         type: 'DELETE',
-                        url: this.href,
+                        url: url,
                         success: function (response) {
                             self.remove();
                             self.locked = false;
@@ -76,5 +85,18 @@ Cloneable.prototype = {
     },
     remove: function () {
         this.$item.slideUp(this.config.slideDuration);
+    },
+    getControlUrl: function (control) {
+        var dataAttributeUrl = $(control).attr(this.config.dataAttribute);
+
+        if (dataAttributeUrl) {
+            return dataAttributeUrl;
+        }
+
+        if (control.href) {
+            return control.href;
+        }
+
+        return null;
     }
 };
