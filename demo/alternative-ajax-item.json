@@ -1,0 +1,5 @@
+{
+    "data": {
+        "html": "<div class=\"panel js-cloneable\"><div class=\"panel-heading\"><a class=\"icon js-cloneable-add\"><i class=\"fa fa-plus\"></i></a><a class=\"icon js-cloneable-remove\"><i class=\"fa fa-minus\"></i></a><h1>Alternative ajax item</h1></div><div class=\"panel-block\"><div><p>Bla bla bla</p><p>Bla bla bla</p><p>Bla bla bla</p><p>Bla bla bla</p></div></div></div>"
+    }
+}
