@@ -29,10 +29,12 @@ $('.anything-you-want').each(function () {
             type: 'DELETE',
             dataType: 'json'
         },
+        onBeforeAddRequest: function (item) {}, // Will fire before the add request.
+        onBeforeRemoveRequest: function (item) {}, // Will fire before the remove request.
         onBeforeAddHtml: function (response) { // Will fire after successful add request, but before adding html. Receives response object.
             return response; // Should return html;
         },
-        onBeforeRemove: function (response) { // Will fire after successful remove request, but before removing html. Receives response object.
+        onBeforeRemoveHtml: function (response) { // Will fire after successful remove request, but before removing html. Receives response object.
             return true; // Should return bool indicating if remove action may continue.
         }
     });

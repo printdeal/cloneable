@@ -13,10 +13,12 @@ function Cloneable(item, config = {}) {
             type: 'DELETE',
             dataType: 'json'
         },
+        onBeforeAddRequest: function (item) {},
+        onBeforeRemoveRequest: function (item) {},
         onBeforeAddHtml: function (response) {
             return response;
         },
-        onBeforeRemove: function (response) {
+        onBeforeRemoveHtml: function (response) {
             return true;
         }
     };
@@ -39,6 +41,8 @@ Cloneable.prototype = {
 
                 if(!self.locked) {
                     self.locked = true;
+
+                    self.config.onBeforeAddRequest(self.$item[0]);
 
                     $.ajax({
                         type: self.config.addRequest.type,
@@ -70,12 +74,14 @@ Cloneable.prototype = {
                 if(!self.locked) {
                     self.locked = true;
 
+                    self.config.onBeforeRemoveRequest(self.$item[0]);
+
                     $.ajax({
                         type: self.config.removeRequest.type,
                         dataType: self.config.removeRequest.dataType,
                         url: url,
                         success: function (response) {
-                            var remove = self.config.onBeforeRemove(response);
+                            var remove = self.config.onBeforeRemoveHtml(response);
                             if(remove) {
                                 self.remove();
                             }
