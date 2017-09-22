@@ -5,8 +5,19 @@ function Cloneable(item, config = {}) {
         removeSelector: '.js-cloneable-remove',
         slideDuration: 200,
         dataAttribute: 'data-ajax-url',
+        addRequest: {
+            type: 'GET',
+            dataType: 'html'
+        },
+        removeRequest: {
+            type: 'DELETE',
+            dataType: 'json'
+        },
         onBeforeAddHtml: function (response) {
             return response;
+        },
+        onBeforeRemove: function (response) {
+            return true;
         }
     };
     this.config = $.extend(this.config, config);
@@ -30,7 +41,8 @@ Cloneable.prototype = {
                     self.locked = true;
 
                     $.ajax({
-                        type: 'GET',
+                        type: self.config.addRequest.type,
+                        dataType: self.config.addRequest.dataType,
                         url: url,
                         success: function (response) {
                             html = self.config.onBeforeAddHtml(response);
@@ -38,8 +50,7 @@ Cloneable.prototype = {
                                 self.add(html);
                             }
                             self.locked = false;
-                        },
-                        dataType: 'html'
+                        }
                     });
                 }
 
@@ -60,13 +71,16 @@ Cloneable.prototype = {
                     self.locked = true;
 
                     $.ajax({
-                        type: 'DELETE',
+                        type: self.config.removeRequest.type,
+                        dataType: self.config.removeRequest.dataType,
                         url: url,
                         success: function (response) {
-                            self.remove();
+                            var remove = self.config.onBeforeRemove(response);
+                            if(remove) {
+                                self.remove();
+                            }
                             self.locked = false;
-                        },
-                        dataType: 'json'
+                        }
                     });
                 }
 

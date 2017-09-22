@@ -21,8 +21,19 @@ $('.anything-you-want').each(function () {
         removeSelector: '.anything-you-want',
         slideDuration: 200, // In milliseconds
         dataAttribute: 'data-ajax-url', // Will take priority over href
+        addRequest: { // Configure add request type and datatype
+            type: 'GET',
+            dataType: 'html'
+        },
+        removeRequest: { // Configure remove request type and datatype
+            type: 'DELETE',
+            dataType: 'json'
+        },
         onBeforeAddHtml: function (response) { // Will fire after successful add request, but before adding html. Receives response object.
             return response; // Should return html;
+        },
+        onBeforeRemove: function (response) { // Will fire after successful remove request, but before removing html. Receives response object.
+            return true; // Should return bool indicating if remove action may continue.
         }
     });
 });

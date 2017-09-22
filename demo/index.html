@@ -82,7 +82,7 @@
         <script src="../src/cloneable.js"></script>
         <script>
             $('.js-cloneable').each(function () {
-                if($(this).find('.js-cloneable-add[data-ajax-url]')) {
+                if($(this).find('[data-ajax-url]').length > 0) {
                     new Cloneable(this, {
                         onBeforeAddHtml: function (response) {
                             var response = JSON.parse(response);
