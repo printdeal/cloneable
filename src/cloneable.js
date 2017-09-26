@@ -20,7 +20,9 @@ function Cloneable(item, config = {}) {
         },
         onBeforeRemoveHtml: function (response) {
             return true;
-        }
+        },
+        onAfterAddHtml: function () {},
+        onAfterRemoveHtml: function () {}
     };
     this.config = $.extend(this.config, config);
     this.locked = false;
@@ -102,9 +104,14 @@ Cloneable.prototype = {
         this.$item.after($newItem);
         $newItem.slideDown(this.config.slideDuration);
         new Cloneable($newItem[0], this.config);
+        this.config.onAfterAddHtml();
     },
     remove: function () {
-        this.$item.slideUp(this.config.slideDuration);
+        var self = this;
+        this.$item.slideUp(this.config.slideDuration, function () {
+            $(this).remove();
+            self.config.onAfterRemoveHtml();
+        });
     },
     getControlUrl: function (control) {
         var dataAttributeUrl = $(control).attr(this.config.dataAttribute);

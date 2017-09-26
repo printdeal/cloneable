@@ -36,7 +36,9 @@ $('.anything-you-want').each(function () {
         },
         onBeforeRemoveHtml: function (response) { // Will fire after successful remove request, but before removing html. Receives response object.
             return true; // Should return bool indicating if remove action may continue.
-        }
+        },
+        onAfterAddHtml: function () {}, // Called after the element has been added.
+        onAfterRemoveHtml: function () {} // Called after the element has been removed.
     });
 });
 ```
