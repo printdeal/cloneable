@@ -15,14 +15,14 @@ function Cloneable(item, config = {}) {
         },
         onBeforeAddRequest: function (item) {},
         onBeforeRemoveRequest: function (item) {},
-        onBeforeAddHtml: function (response) {
+        onBeforeAddHtml: function (item, response) {
             return response;
         },
-        onBeforeRemoveHtml: function (response) {
+        onBeforeRemoveHtml: function (item, response) {
             return true;
         },
-        onAfterAddHtml: function () {},
-        onAfterRemoveHtml: function () {}
+        onAfterAddHtml: function (item, newItem) {},
+        onAfterRemoveHtml: function (item) {}
     };
     this.config = $.extend(this.config, config);
     this.locked = false;
@@ -51,7 +51,7 @@ Cloneable.prototype = {
                         dataType: self.config.addRequest.dataType,
                         url: url,
                         success: function (response) {
-                            html = self.config.onBeforeAddHtml(response);
+                            html = self.config.onBeforeAddHtml(self.$item[0], response);
                             if (html !== null) {
                                 self.add(html);
                             }
@@ -83,7 +83,7 @@ Cloneable.prototype = {
                         dataType: self.config.removeRequest.dataType,
                         url: url,
                         success: function (response) {
-                            var remove = self.config.onBeforeRemoveHtml(response);
+                            var remove = self.config.onBeforeRemoveHtml(self.$item[0], response);
                             if(remove) {
                                 self.remove();
                             }
@@ -104,13 +104,13 @@ Cloneable.prototype = {
         this.$item.after($newItem);
         $newItem.slideDown(this.config.slideDuration);
         new Cloneable($newItem[0], this.config);
-        this.config.onAfterAddHtml();
+        this.config.onAfterAddHtml(this.$item[0], $newItem[0]);
     },
     remove: function () {
         var self = this;
         this.$item.slideUp(this.config.slideDuration, function () {
             $(this).remove();
-            self.config.onAfterRemoveHtml();
+            self.config.onAfterRemoveHtml(self.$item[0]);
         });
     },
     getControlUrl: function (control) {

@@ -31,14 +31,14 @@ $('.anything-you-want').each(function () {
         },
         onBeforeAddRequest: function (item) {}, // Will fire before the add request.
         onBeforeRemoveRequest: function (item) {}, // Will fire before the remove request.
-        onBeforeAddHtml: function (response) { // Will fire after successful add request, but before adding html. Receives response object.
+        onBeforeAddHtml: function (item, response) { // Will fire after successful add request, but before adding html.
             return response; // Should return html;
         },
-        onBeforeRemoveHtml: function (response) { // Will fire after successful remove request, but before removing html. Receives response object.
+        onBeforeRemoveHtml: function (item, response) { // Will fire after successful remove request, but before removing html.
             return true; // Should return bool indicating if remove action may continue.
         },
-        onAfterAddHtml: function () {}, // Called after the element has been added.
-        onAfterRemoveHtml: function () {} // Called after the element has been removed.
+        onAfterAddHtml: function (item, newItem) {}, // Called after the element has been added.
+        onAfterRemoveHtml: function (item) {} // Called after the element has been removed.
     });
 });
 ```
