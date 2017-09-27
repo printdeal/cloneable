@@ -105,7 +105,7 @@ Cloneable.prototype = {
         this.$item.after($newItem);
         new Cloneable($newItem[0], this.config);
         $newItem.slideDown(this.config.slideDuration, function () {
-            this.config.onAfterAddHtml(self.$item[0], this);
+            self.config.onAfterAddHtml(self.$item[0], this);
         });
     },
     remove: function () {
