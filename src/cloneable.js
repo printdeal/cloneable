@@ -99,12 +99,14 @@ Cloneable.prototype = {
         });
     },
     add: function (html) {
+        var self = this;
         $newItem = $(html);
         $newItem.hide();
         this.$item.after($newItem);
-        $newItem.slideDown(this.config.slideDuration);
         new Cloneable($newItem[0], this.config);
-        this.config.onAfterAddHtml(this.$item[0], $newItem[0]);
+        $newItem.slideDown(this.config.slideDuration, function () {
+            this.config.onAfterAddHtml(self.$item[0], this);
+        });
     },
     remove: function () {
         var self = this;
