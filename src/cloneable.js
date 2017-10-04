@@ -1,4 +1,4 @@
-function Cloneable(item, config = {}) {
+function Cloneable(item, config) {
     this.$item = $(item);
     this.config = {
         addSelector: '.js-cloneable-add',
